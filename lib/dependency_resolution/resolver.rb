@@ -11,7 +11,10 @@ module DependencyResolution
 
     def add_dependency(dependent:, dependee:)
       graph.add_edge(dependent, dependee)
+    end
 
+    def remove_dependency(dependent:, dependee:)
+      graph.remove_edge(dependent, dependee)
     end
 
     def dependents(start_node)

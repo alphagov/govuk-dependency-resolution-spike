@@ -28,3 +28,11 @@ module DependencyResolution
     end
   end
 end
+
+# 1. adapt to use a database for storing the graph
+  # - Small enough to fit in memory
+  # - could do something with the event log for keeping up to date
+  # - if keeping data in sync becomes a problem we can use a graph database
+
+# 2. figure out how to nest dependencies in links hash (by depth)
+  # - Library seems able to do this with some work

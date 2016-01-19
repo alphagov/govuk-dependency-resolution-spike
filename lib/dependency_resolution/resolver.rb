@@ -1,41 +1,27 @@
+require 'rgl/adjacency'
+require 'rgl/traversal'
+
 module DependencyResolution
   class Resolver
-    attr_accessor :dependencies
+    attr_accessor :graph
 
     def initialize
-      self.dependencies = Set.new
+      self.graph = RGL::DirectedAdjacencyGraph.new
     end
 
     def add_dependency(dependent:, dependee:)
-      return if dependent == dependee || dependencies.include?([dependent, dependee])
+      graph.add_edge(dependent, dependee)
 
-      dependencies << [dependent, dependee]
-      
-      dependees(dependee).each do |node|
-        add_dependency(
-          dependent: dependent,
-          dependee: node
-        )
-      end
-
-      dependents(dependent).each do |node|
-        add_dependency(
-          dependent: node,
-          dependee: dependee
-        )
-      end
     end
 
-    def dependents(dependee_to_filter_by)
-      dependencies.map {|(dependent, dependee)|
-        dependent if dependee == dependee_to_filter_by
-      }.compact.to_set
+    def dependents(start_node)
+      subgraph = graph.reverse.bfs_search_tree_from(start_node)
+      subgraph.vertices.to_set.delete(start_node)
     end
 
-    def dependees(dependent_to_filter_by)
-      dependencies.map {|(dependent, dependee)|
-        dependee if dependent == dependent_to_filter_by
-      }.compact.to_set
+    def dependees(start_node)
+      subgraph = graph.bfs_search_tree_from(start_node)
+      subgraph.vertices.to_set.delete(start_node)
     end
   end
 end

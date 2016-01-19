@@ -1,7 +1,11 @@
 GEM
   remote: https://rubygems.org/
   specs:
+    algorithms (0.6.1)
     diff-lcs (1.2.5)
+    rgl (0.5.1)
+      algorithms (~> 0.6.1)
+      stream (~> 0.5.0)
     rspec (3.4.0)
       rspec-core (~> 3.4.0)
       rspec-expectations (~> 3.4.0)
@@ -15,9 +19,14 @@ GEM
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.4.0)
     rspec-support (3.4.1)
+    stream (0.5)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
+  rgl
   rspec
+
+BUNDLED WITH
+   1.10.6
